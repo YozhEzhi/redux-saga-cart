@@ -7,7 +7,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 const compiler = webpack(webpackConfig);
 import webpackHotMiddleware from "webpack-hot-middleware";
 
-import  socketIO from 'socket.io'
+import socketIO from 'socket.io';
 
 let app = express();
 app.use(webpackDevMiddleware(compiler, {
@@ -25,14 +25,12 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIO(server);
 
-
-
-io.on('connection',(connection)=>{
+io.on('connection', (connection) => {
     let supportAvailable = false;
-    setInterval(()=>{
+    setInterval(() => {
         supportAvailable = !supportAvailable;
-        connection.emit(supportAvailable ? `SUPPORT_AVAILABLE` : `SUPPORT_NOT_AVAILABLE`);
-    },10000);
+        connection.emit(supportAvailable ? 'SUPPORT_AVAILABLE' : 'SUPPORT_NOT_AVAILABLE');
+    }, 10000);
 });
 
 app.use(express.static('public'));
